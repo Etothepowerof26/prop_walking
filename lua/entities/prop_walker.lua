@@ -123,21 +123,15 @@ function ENT:TestCollision(startpos, delta, isbox, extents, mask)
 	for k, v in ipairs(self.PhysCollides) do
 
 		local hit, norm, frac = v:TraceBox(self:GetPos(), self:GetAngles(), startpos, startpos + delta, min, max)
-
 		if !hit then continue end
 
 		return {
-
 			HitPos = hit,
-
 			Normal = norm,
-
 			Fraction = frac,
-
 		}
 
 	end
-
 end
 
 
@@ -145,7 +139,6 @@ end
 Network position and angle to the client to overcome engine inaccuracies
 ---------------------------------------------------------------------------]]
 function ENT:NetworkAbsPosition(pos, ang)
-
 	if CLIENT then return pos, ang end
 
 	local ground = self:GetNW2Entity("Ground")
@@ -158,34 +151,17 @@ function ENT:NetworkAbsPosition(pos, ang)
 	local newAng = ground:GetAngles()
 	-- Only network if there was a change
 	if !currPos or currPos != newPos then
-
 		self:SetNW2Vector("GroundPos", newPos)
-
 	end
 
 	if !currAng or currAng != newAng then
-
 		self:SetNW2Angle("GroundAng", newAng)
-
 	end
-
 end
 
 --[[-------------------------------------------------------------------------
 Walked on or not, we also wish to network the absolute position whenever it changes
 ---------------------------------------------------------------------------]]
 function ENT:CalcAbsolutePosition()
-
 	self:NetworkAbsPosition()
-
 end
-
-
---[[-------------------------------------------------------------------------
-Prevent Physgun pickups
----------------------------------------------------------------------------]]
-hook.Add("PhysgunPickup", "PreventPickups", function(ply, ent)
-
-	if ent:GetClass() == "prop_walker" then return false end
-
-end)
