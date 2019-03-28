@@ -2,10 +2,12 @@ AddCSLuaFile( )
 
 DEFINE_BASECLASS( "base_anim" )
 
-local InactiveTimerDelay = 120
+local InactiveTimerDelay = GetConVar( "propwalker_remove_delay" ):GetInt( ) * 60
 
 --[[-------------------------------------------------------------------------
 Removal the prop walker after 2 minutes of inactivity
+
+(TODO: change the remove timer to it's think hook?)
 ---------------------------------------------------------------------------]]
 function ENT:RestartRemovalTimer( )
 
