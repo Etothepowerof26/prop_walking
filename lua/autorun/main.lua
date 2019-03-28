@@ -31,6 +31,8 @@ MACRO/MICRO OPS
 local util, table, ents = util, table, ents
 local Vector, IsValid = Vector, IsValid
 
+CreateConVar( "propwalker_remove_delay", "2", FCVAR_ARCHIVE, "(in minutes)" )
+
 --[[-------------------------------------------------------------------------
 Only cover certain grounds ( currently valid physics props )
 ---------------------------------------------------------------------------]]
@@ -243,7 +245,7 @@ Prevent nearby physics damage to the player when on moving grounds
 ---------------------------------------------------------------------------]]--
 hook.Add( "PlayerShouldTakeDamage", "PreventDamage", function( ply, attacker )
 	-- If the attacker doesn't have a physics movetype, bail
-	if attacker:GetMoveType( ) != 6 then return end
+	if attacker:GetMoveType( ) != MOVETYPE_VPHYSICS then return end
 
 	local pw = ply.lastPW
 	if !IsValid( pw ) then return end
